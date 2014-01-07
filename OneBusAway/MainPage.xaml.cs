@@ -34,6 +34,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using System.IO.IsolatedStorage;
 using OneBusAway.WP7.ViewModel.LocationServiceDataStructures;
+using System.Text.RegularExpressions;
 
 namespace OneBusAway.WP7.View
 {
@@ -393,6 +394,11 @@ namespace OneBusAway.WP7.View
                     viewModel.SearchByStop(searchString, SearchByStopCallback);
                 }
             }
+            else if (Regex.IsMatch(searchString, "^[a-zA-Z]$"))
+            {
+                // assume that a single letter is a route name. e.g. the A Line
+                viewModel.SearchByRoute(searchString, SearchByRouteCallback);
+            }
             else if (string.IsNullOrEmpty(searchString) == false) // Try to find the location
             {
                 viewModel.SearchByAddress(searchString, SearchByLocationCallback);
@@ -423,7 +429,7 @@ namespace OneBusAway.WP7.View
             Navigate(new Uri("/StopsMapPage.xaml", UriKind.Relative));
         }
 
-        private void RouteDirection_Tap(object sender, Microsoft.Phone.Controls.GestureEventArgs e)
+        private void RouteDirection_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             RouteStops routeStops = (sender as FrameworkElement).DataContext as RouteStops;
             viewModel.CurrentViewState.CurrentRoutes = new List<Route>() { (Route)routeStops.route };

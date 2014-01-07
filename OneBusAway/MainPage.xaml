@@ -30,7 +30,6 @@
     xmlns:tilt="clr-namespace:ControlTiltEffect"
     shell:SystemTray.IsVisible="False"
     xmlns:localControls="clr-namespace:Microsoft.Phone.Controls"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
 >
     
     <view:AViewPage.Resources>
@@ -121,10 +120,8 @@
                                              Width="390"
                                              Height="45"
                                              tilt:TiltEffect.IsTiltEnabled="True"
+                                             Tap="RouteDirection_Tap"
                                              >
-                                    <toolkit:GestureService.GestureListener>
-                                        <toolkit:GestureListener Tap="RouteDirection_Tap"/>
-                                    </toolkit:GestureService.GestureListener>
                                 </ListBoxItem>
                                 
                             </DataTemplate>
