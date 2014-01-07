@@ -32,6 +32,7 @@
         <data:Stop name="NE 65th st &amp; NE Ravenna BLVD" direction="east"/>
         <data:Stop name="NEW RAVENNA BLVD &amp; NE 65TH ST" direction="northwest"/>
     </viewmodel:MainPageVM.StopsForLocation>
+    <!--
     <viewmodel:MainPageVM.DisplayRouteForLocation>
         <viewmodel:DisplayRoute>
             <viewmodel:DisplayRoute.Route>
@@ -79,6 +80,7 @@
             </viewmodel:DisplayRoute.RouteStops>
         </viewmodel:DisplayRoute>
     </viewmodel:MainPageVM.DisplayRouteForLocation>
+    -->
     <viewmodel:MainPageVM.Favorites>
         <appdata:FavoriteRouteAndStop>
             <appdata:FavoriteRouteAndStop.route>

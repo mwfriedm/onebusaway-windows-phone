@@ -75,7 +75,9 @@
         <Grid x:Name="ContentGrid" Grid.Row="1">
             <ListBox 
                 x:Name="BusDirectionListBox" 
-                ItemsSource="{Binding Path=RouteDirections, Source={StaticResource ViewModel}}" 
+                d:DataContext="{d:DesignData Source=SampleData/BusDirectionVMSampleData.xaml}"
+                ItemsSource="{Binding Path=RouteDirections}"
+                DataContext="{StaticResource ViewModel}"
                 ItemTemplate="{StaticResource RouteDirectionTemplate}" 
                 SelectionChanged="BusDirectionListBox_SelectionChanged" 
                 />

@@ -45,16 +45,20 @@ namespace OneBusAway.WP7.ViewModel
         {
             LastKnownLocation = null;
 
-            locationWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
-            locationWatcher.MovementThreshold = 5; // 5 meters
-            locationWatcher.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(LocationWatcher_PositionChanged);
-            locationWatcher.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(locationWatcher_StatusChanged);
-
-            // Only start the location service if location is enabled
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("UseLocation") == false
-                || (bool)IsolatedStorageSettings.ApplicationSettings["UseLocation"] == true)
+            // the design tool throws an exception trying to load LocationService.Interop if you instantiate the GeoCoordinateWatcher
+            if (!DesignerProperties.IsInDesignTool)
             {
-                locationWatcher.Start();
+                locationWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
+                locationWatcher.MovementThreshold = 5; // 5 meters
+                locationWatcher.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(LocationWatcher_PositionChanged);
+                locationWatcher.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(locationWatcher_StatusChanged);
+
+                // Only start the location service if location is enabled
+                if (IsolatedStorageSettings.ApplicationSettings.Contains("UseLocation") == false
+                    || (bool)IsolatedStorageSettings.ApplicationSettings["UseLocation"] == true)
+                {
+                    locationWatcher.Start();
+                }
             }
         }
 
