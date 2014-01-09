@@ -31,6 +31,14 @@ namespace OneBusAway.WP7.ViewModel.BusServiceDataStructures
             encodedPolylines = new List<PolyLine>();
         }
 
+        public RouteStops(RouteStops other) : this()
+        {
+            if (other != null)
+            {
+                other.CopyTo(this);
+            }
+        }
+
         [DataMember()]
         public Route route { get; set; }
         [DataMember()]

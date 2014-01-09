@@ -80,7 +80,7 @@ namespace OneBusAway.WP7.View
             }
 
             AViewModel viewModel = parameter as AViewModel;
-            if (stop != null && viewModel.LocationTracker.LocationKnown == true)
+            if (stop != null && viewModel.LocationTracker.LocationKnown == true && viewModel.LocationTracker.CurrentLocation != null)
             {
                 double distance = stop.CalculateDistanceInMiles(viewModel.LocationTracker.CurrentLocation);
                 return string.Format("distance: {0:0.00} mi", distance);

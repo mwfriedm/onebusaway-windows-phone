@@ -130,7 +130,10 @@ namespace OneBusAway.WP7.View
             {
                 viewModel.LoadArrivalsForStop(viewModel.CurrentViewState.CurrentStop, null);
             }
+        }
 
+        private void DetailsMap_Loaded(object sender, RoutedEventArgs e)
+        {
             // When we enter this page after tombstoning often the location won't be available when the map
             // data binding queries CurrentLocationSafe.  The center doesn't update when the property changes
             // so we need to explicitly set the center once the location is known.
@@ -218,7 +221,7 @@ namespace OneBusAway.WP7.View
 
             FavoriteRouteAndStop currentInfo = new FavoriteRouteAndStop();
             currentInfo.route = viewModel.CurrentViewState.CurrentRoute;
-            currentInfo.routeStops = viewModel.CurrentViewState.CurrentRouteDirection;
+            currentInfo.routeStops = new RouteStops(viewModel.CurrentViewState.CurrentRouteDirection);
             currentInfo.stop = viewModel.CurrentViewState.CurrentStop;
 
             isFavorite = viewModel.IsFavorite(currentInfo);
@@ -234,7 +237,7 @@ namespace OneBusAway.WP7.View
         {
             RecentRouteAndStop recent = new RecentRouteAndStop();
             recent.route = viewModel.CurrentViewState.CurrentRoute;
-            recent.routeStops = viewModel.CurrentViewState.CurrentRouteDirection;
+            recent.routeStops = new RouteStops(viewModel.CurrentViewState.CurrentRouteDirection);
             recent.stop = viewModel.CurrentViewState.CurrentStop;
 
             ArrivalsListBox.DataContext = viewModel;
@@ -283,8 +286,7 @@ namespace OneBusAway.WP7.View
             FavoriteRouteAndStop favorite = new FavoriteRouteAndStop();
             favorite.route = viewModel.CurrentViewState.CurrentRoute;
             favorite.stop = viewModel.CurrentViewState.CurrentStop;
-            favorite.routeStops = new RouteStops();
-            viewModel.CurrentViewState.CurrentRouteDirection.CopyTo(favorite.routeStops);
+            favorite.routeStops = new RouteStops(viewModel.CurrentViewState.CurrentRouteDirection);
 
             if (isFavorite == false)
             {

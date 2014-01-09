@@ -174,8 +174,8 @@
 
         <Grid Grid.Row="1" x:Name="ContentGrid">
             <m:Map x:Name="DetailsMap" 
-                   Center="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}"  ZoomLevel="10"
-                   ZoomLevelChanged="DetailsMap_MapZoom">
+                   Center="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}" ZoomLevel="10"
+                   ZoomLevelChanged="DetailsMap_MapZoom" Loaded="DetailsMap_Loaded">
 
                     <maptk:MapExtensions.Children>
                     <maptk:MapItemsControl x:Name="BusTripsItemsControl" ItemsSource="{Binding Path=ArrivalsForStop, Source={StaticResource ViewModel}}">
