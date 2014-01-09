@@ -345,9 +345,9 @@ namespace OneBusAway.WP7.Model
                                                                         pointsString = SafeGetValue(poly.Element("points")),
                                                                         length = SafeGetValue(poly.Element("length"))
                                                                     }).ToList<PolyLine>(),
-                                                stops =
-                                                    (from stopId in stopGroup.Descendants("stopIds").First().Descendants("string")
-                                                     select stopsMap[SafeGetValue(stopId)]).ToList<Stop>(),
+                                                stops = new System.Collections.ObjectModel.ObservableCollection<Stop> (
+                                                    from stopId in stopGroup.Descendants("stopIds").First().Descendants("string")
+                                                     select stopsMap[SafeGetValue(stopId)]),
 
                                                 route = routesMap[route.id]
 

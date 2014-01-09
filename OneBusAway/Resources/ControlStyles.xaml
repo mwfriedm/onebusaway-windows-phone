@@ -19,6 +19,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:m="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
+    xmlns:maptk="clr-namespace:Microsoft.Phone.Maps.Toolkit;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:local="clr-namespace:Microsoft.Phone.Controls"
     xmlns:localPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives"
     xmlns:phoneNavigation="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -176,7 +177,18 @@
         </Setter>
     </Style>
 
-    <Style x:Key="BusTripPushpinStyle" TargetType="m:Pushpin">
+    <!-- TODO temporary copy until all the pages are converted to the WP8 Maps controls -->
+    <Style x:Key="MyLocationPushpinStyleTk" TargetType="maptk:Pushpin">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Image Source="/Images/CenterIcon.png" Width="27" Height="27" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BusTripPushpinStyle" TargetType="maptk:Pushpin">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>

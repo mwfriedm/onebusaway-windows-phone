@@ -21,11 +21,14 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Threading;
-using Microsoft.Phone.Controls.Maps;
+using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Shell;
 using OneBusAway.WP7.ViewModel;
 using OneBusAway.WP7.ViewModel.AppDataDataStructures;
 using OneBusAway.WP7.ViewModel.BusServiceDataStructures;
+using Microsoft.Phone.Maps.Toolkit;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace OneBusAway.WP7.View
 {
@@ -115,6 +118,8 @@ namespace OneBusAway.WP7.View
             busArrivalUpdateTimer.Start();
             viewModel.RegisterEventHandlers(Dispatcher);
 
+            viewModel.CurrentViewState.PropertyChanged += CurrentViewState_PropertyChanged;
+
             UpdateAppBar(true);
 
             if (isFiltered == true)
@@ -152,11 +157,12 @@ namespace OneBusAway.WP7.View
                             radius = Math.Max(radius, minimumZoomRadius);
                             radius = Math.Min(radius, maximumZoomRadius);
 
-                            DetailsMap.SetView(new LocationRect(location, radius, radius));
+                            DetailsMap.SetView(new LocationRectangle(location, radius, radius));
                         }
                     }
 
                     DetailsMap_MapZoom(this, null);
+                    RenderPolyline();
                 });
             }
             );
@@ -244,9 +250,6 @@ namespace OneBusAway.WP7.View
             this.RouteInfo.DataContext = null;
             this.RouteName.DataContext = null;
             this.RouteNumber.DataContext = null;
-            this.StopPushpin.DataContext = null;
-            this.RouteLineControl.DataContext = null;
-            this.BusStopItemsControl.DataContext = null;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -256,6 +259,7 @@ namespace OneBusAway.WP7.View
             busArrivalUpdateTimer.Stop();
             PhoneApplicationService.Current.State[isFilteredStateId] = isFiltered;
 
+            viewModel.CurrentViewState.PropertyChanged -= CurrentViewState_PropertyChanged;
             viewModel.UnregisterEventHandlers();
 
             RouteInfo.DataContext = null;
@@ -354,12 +358,63 @@ namespace OneBusAway.WP7.View
             }
         }
 
-        private void DetailsMap_MapZoom(object sender, MapZoomEventArgs e)
+        void CurrentViewState_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (DetailsMap.TargetZoomLevel < 15)
-                BusStopsLayer.Visibility = System.Windows.Visibility.Collapsed;
-            else
-                BusStopsLayer.Visibility = System.Windows.Visibility.Visible;
+            // hook changes to the route + direction, so that we can update the route polylines
+            if (e.PropertyName.Equals("CurrentRouteDirection"))
+            {
+                Dispatcher.BeginInvoke(() => RenderPolyline());
+            }
+        }
+
+        // WP8 Maps SDK doesn't support databindings for polylines.
+        // draw them in with code instead.
+        private void RenderPolyline()
+        {
+            DetailsMap.MapElements.Clear();
+            if (viewModel.CurrentViewState.CurrentRouteDirection != null)
+            {
+                RouteStops routeStops = viewModel.CurrentViewState.CurrentRouteDirection;
+
+                if (routeStops.encodedPolylines != null)
+                {
+                    foreach (PolyLine pl in routeStops.encodedPolylines)
+                    {
+                        MapPolyline routePolyline = new MapPolyline();
+                        routePolyline.StrokeThickness = 5;
+                        routePolyline.StrokeColor = ((SolidColorBrush)Application.Current.Resources["OBAAccentBrush"]).Color;
+                        pl.Coordinates.ForEach(coordinate => routePolyline.Path.Add(new GeoCoordinate(coordinate.Latitude, coordinate.Longitude)));
+                        DetailsMap.MapElements.Add(routePolyline);
+                    }
+                }
+            }
+        }
+
+        private void DetailsMap_MapZoom(object sender, MapZoomLevelChangedEventArgs e)
+        {
+            // this loop is an ugly way to find the stop controls.
+            // they're not directly available from the MapItemsControl, so we have to find them in the Map
+            // the MapExtensions.GetChildren method only finds us the data objects, not the UI controls
+            foreach (MapLayer layer in DetailsMap.Layers)
+            {
+                foreach (MapOverlay overlay in layer)
+                {
+                    ContentPresenter item = overlay.Content as ContentPresenter;
+                    if (item == null)
+                        continue;
+                    if (item.Content is Stop)
+                    {
+                        if (DetailsMap.ZoomLevel < 13.5)
+                        {
+                            item.Visibility = System.Windows.Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            item.Visibility = System.Windows.Visibility.Visible;
+                        }
+                    }
+                }
+            }
         }
 
         private void BusStopPushpin_Click(object sender, RoutedEventArgs e)
@@ -367,11 +422,10 @@ namespace OneBusAway.WP7.View
             if (sender is Button)
             {
                 string selectedStopId = (string)((Button)sender).Tag;
-
                 Stop selectedStop = null;
-                foreach (object item in BusStopItemsControl.Items)
+
+                foreach (Stop stop in viewModel.CurrentViewState.CurrentRouteDirection.stops)
                 {
-                    Stop stop = item as Stop;
                     if (stop != null && stop.id == selectedStopId)
                     {
                         selectedStop = stop;

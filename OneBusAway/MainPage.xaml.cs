@@ -437,7 +437,12 @@ namespace OneBusAway.WP7.View
             viewModel.CurrentViewState.CurrentRoute = routeStops.route;
             viewModel.CurrentViewState.CurrentRouteDirection = routeStops;
 
-            viewModel.CurrentViewState.CurrentStop = viewModel.CurrentViewState.CurrentRouteDirection.stops[0];
+            // default to the first stop
+            if (viewModel.CurrentViewState.CurrentRouteDirection.stops.Count > 0)
+            {
+                viewModel.CurrentViewState.CurrentStop = viewModel.CurrentViewState.CurrentRouteDirection.stops[0];
+            }
+            // then see if we can find the closest stop
             foreach (Stop stop in viewModel.CurrentViewState.CurrentRouteDirection.stops)
             {
                 // TODO: Make this call location-unknown safe.  The CurrentLocation could be unknown

@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Device.Location;
+using System.Collections.ObjectModel;
 
 namespace OneBusAway.WP7.ViewModel.BusServiceDataStructures
 {
@@ -29,9 +30,37 @@ namespace OneBusAway.WP7.ViewModel.BusServiceDataStructures
         [DataMember()]
         public string name { get; set; }
         [DataMember()]
-        public List<Stop> stops { get; set; }
+        public ObservableCollection<Stop> stops { get; set; }
         [DataMember()]
         public List<PolyLine> encodedPolylines { get; set; }
+
+        public void CopyTo(RouteStops other)
+        {
+            if (other != null)
+            {
+                other.route = route;
+                other.name = name;
+                other.stops.Clear();
+                if (stops != null)
+                {
+                    foreach(Stop s in stops)
+                        other.stops.Add(s);
+                }
+                other.encodedPolylines.Clear();
+                if (encodedPolylines != null)
+                {
+                    other.encodedPolylines.AddRange(encodedPolylines);
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            route = null;
+            name = null;
+            stops.Clear();
+            encodedPolylines.Clear();
+        }
 
         public override bool Equals(object obj)
         {

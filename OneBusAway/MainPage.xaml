@@ -26,7 +26,7 @@
     xmlns:view="clr-namespace:OneBusAway.WP7.View;assembly=OneBusAway.WP7.View"
     xmlns:local="clr-namespace:OneBusAway.WP7.View"
     xmlns:m="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps" 
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728"
+    mc:Ignorable="d"
     xmlns:tilt="clr-namespace:ControlTiltEffect"
     shell:SystemTray.IsVisible="False"
     xmlns:localControls="clr-namespace:Microsoft.Phone.Controls"

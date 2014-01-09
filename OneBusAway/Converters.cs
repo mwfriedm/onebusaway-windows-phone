@@ -13,23 +13,14 @@
  * limitations under the License.
  */
 using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Windows.Data;
-using OneBusAway.WP7.ViewModel.BusServiceDataStructures;
-using System.Device.Location;
-using OneBusAway.WP7.ViewModel;
-using Microsoft.Phone.Controls.Maps;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media;
+using OneBusAway.WP7.ViewModel;
 using OneBusAway.WP7.ViewModel.AppDataDataStructures;
+using OneBusAway.WP7.ViewModel.BusServiceDataStructures;
 
 namespace OneBusAway.WP7.View
 {
@@ -404,43 +395,6 @@ namespace OneBusAway.WP7.View
             return null;
         }
 
-    }
-
-    public class PolylineConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value is RouteStops)
-            {
-                RouteStops routeStops = (RouteStops)value;
-
-                if (routeStops.encodedPolylines != null)
-                {
-                    List<LocationCollection> polylines = new List<LocationCollection>();
-                    foreach (PolyLine pl in routeStops.encodedPolylines)
-                    {
-                        LocationCollection polyline = new LocationCollection();
-                        pl.Coordinates.ForEach(coordinate => polyline.Add(new GeoCoordinate(coordinate.Latitude, coordinate.Longitude)));
-                        polylines.Add(polyline);
-                    }
-
-                    return polylines;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return null;
-        }
     }
 
     /// <summary>

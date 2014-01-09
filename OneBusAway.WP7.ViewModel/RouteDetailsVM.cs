@@ -219,7 +219,7 @@ namespace OneBusAway.WP7.ViewModel
                         // This will happen if we don't find a match between the headsign and route direction
                         // The 48 route in particular has this problem, if we leave this as null the
                         // filtered appbar icon won't update correctly
-                        if (viewModel.CurrentViewState.CurrentRouteDirection == null)
+                        if (viewModel.CurrentViewState.CurrentRouteDirection == null || String.IsNullOrEmpty(viewModel.CurrentViewState.CurrentRouteDirection.name))
                         {
                             Debug.Assert(false);
                             viewModel.CurrentViewState.CurrentRouteDirection = new RouteStops();

@@ -76,7 +76,18 @@ namespace OneBusAway.WP7.ViewModel
 
             set
             {
-                currentRouteDirection = value;
+                if (currentRouteDirection == null)
+                {
+                    currentRouteDirection = value;
+                }
+                else if (value != null)
+                {
+                    value.CopyTo(currentRouteDirection);
+                }
+                else
+                {
+                    currentRouteDirection.Clear();
+                }
                 OnPropertyChanged("CurrentRouteDirection");
             }
         }
