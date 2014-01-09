@@ -25,6 +25,12 @@ namespace OneBusAway.WP7.ViewModel.BusServiceDataStructures
     [DataContract()]
     public class RouteStops
     {
+        public RouteStops()
+        {
+            stops = new ObservableCollection<Stop>();
+            encodedPolylines = new List<PolyLine>();
+        }
+
         [DataMember()]
         public Route route { get; set; }
         [DataMember()]
@@ -58,8 +64,14 @@ namespace OneBusAway.WP7.ViewModel.BusServiceDataStructures
         {
             route = null;
             name = null;
-            stops.Clear();
-            encodedPolylines.Clear();
+            if (stops != null)
+            {
+                stops.Clear();
+            }
+            if (encodedPolylines != null)
+            {
+                encodedPolylines.Clear();
+            }
         }
 
         public override bool Equals(object obj)

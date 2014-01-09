@@ -283,7 +283,8 @@ namespace OneBusAway.WP7.View
             FavoriteRouteAndStop favorite = new FavoriteRouteAndStop();
             favorite.route = viewModel.CurrentViewState.CurrentRoute;
             favorite.stop = viewModel.CurrentViewState.CurrentStop;
-            favorite.routeStops = viewModel.CurrentViewState.CurrentRouteDirection;
+            favorite.routeStops = new RouteStops();
+            viewModel.CurrentViewState.CurrentRouteDirection.CopyTo(favorite.routeStops);
 
             if (isFavorite == false)
             {
