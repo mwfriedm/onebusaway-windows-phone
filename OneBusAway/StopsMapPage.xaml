@@ -105,7 +105,7 @@
                             </Grid>
                         </Button>
                 </maptk:Pushpin>
-                <maptk:Pushpin Canvas.ZIndex="8" GeoCoordinate="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}" PositionOrigin="0.5,0.5" Style="{StaticResource MyLocationPushpinStyleTk}" />
+                <maptk:Pushpin Canvas.ZIndex="8" GeoCoordinate="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}" PositionOrigin="0.5,0.5" Style="{StaticResource MyLocationPushpinStyle}" />
             </maptk:MapExtensions.Children>
         </m:Map>
         

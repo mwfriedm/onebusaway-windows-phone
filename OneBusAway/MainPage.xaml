@@ -25,7 +25,8 @@
     xmlns:data="clr-namespace:OneBusAway.WP7.ViewModel;assembly=OneBusAway.WP7.ViewModel" 
     xmlns:view="clr-namespace:OneBusAway.WP7.View;assembly=OneBusAway.WP7.View"
     xmlns:local="clr-namespace:OneBusAway.WP7.View"
-    xmlns:m="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps" 
+    xmlns:m="clr-namespace:Microsoft.Phone.Maps.Controls;assembly=Microsoft.Phone.Maps"
+    xmlns:maptk="clr-namespace:Microsoft.Phone.Maps.Toolkit;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     xmlns:tilt="clr-namespace:ControlTiltEffect"
     shell:SystemTray.IsVisible="False"
@@ -36,7 +37,7 @@
         <data:MainPageVM x:Key="ViewModel" />
 
         <DataTemplate x:Key="PushpinTemplate">
-            <m:Pushpin PositionOrigin="{Binding location}" />
+            <maptk:Pushpin PositionOrigin="{Binding location}" />
         </DataTemplate>
 
         <view:StopRoutesConverter x:Key="StopRoutesConverter"></view:StopRoutesConverter>
@@ -214,22 +215,18 @@
                         VerticalContentAlignment="Stretch" 
                         Padding="0"
                         >
-                        <m:Map x:Name="StopsMap" CopyrightVisibility="Collapsed" LogoVisibility="Collapsed" ScaleVisibility="Collapsed" CredentialsProvider="{StaticResource MapCredentials}"
+                        <m:Map x:Name="StopsMap"
                                Center="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}"  ZoomLevel="17" IsEnabled="False">
-                            <m:MapLayer x:Name="BusStopsLayer">
-                                <m:MapItemsControl x:Name="StopsMapItemsControl" ItemsSource="{Binding Path=StopsForLocation, Source={StaticResource ViewModel}}">
-                                    <m:MapItemsControl.ItemTemplate>
+                            <maptk:MapExtensions.Children>
+                                <maptk:MapItemsControl x:Name="StopsMapItemsControl" ItemsSource="{Binding Path=StopsForLocation, Source={StaticResource ViewModel}}">
+                                    <maptk:MapItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <m:Pushpin Location="{Binding location}" Style="{StaticResource BusStopSmallPushpinStyle}" PositionOrigin="Center" />
+                                            <maptk:Pushpin GeoCoordinate="{Binding location}" Style="{StaticResource BusStopSmallPushpinStyle}" PositionOrigin="0.5,0.5" />
                                         </DataTemplate>
-                                    </m:MapItemsControl.ItemTemplate>
-                                </m:MapItemsControl>
-                            </m:MapLayer>
-                            <m:MapLayer x:Name="MyLocationLayer">
-                                <m:MapLayer.Children>
-                                    <m:Pushpin Location="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}" PositionOrigin="Center" Style="{StaticResource MyLocationPushpinStyle}" />
-                                </m:MapLayer.Children>
-                            </m:MapLayer>
+                                    </maptk:MapItemsControl.ItemTemplate>
+                                </maptk:MapItemsControl>
+                                <maptk:Pushpin GeoCoordinate="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}" PositionOrigin="0.5,0.5" Style="{StaticResource MyLocationPushpinStyle}" />
+                            </maptk:MapExtensions.Children>
                         </m:Map>
                     </Button>
                     <ListBox Grid.Row="1"

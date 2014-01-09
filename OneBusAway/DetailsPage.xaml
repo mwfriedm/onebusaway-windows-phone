@@ -205,7 +205,7 @@
                     <maptk:Pushpin GeoCoordinate="{Binding Path=CurrentViewState.CurrentStop.location}" DataContext="{StaticResource ViewModel}">
                         <Image Source="/Bus_Icon.png" Width="25" Height="25" />
                     </maptk:Pushpin>
-                    <maptk:Pushpin GeoCoordinate="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}" Style="{StaticResource MyLocationPushpinStyleTk}" 
+                    <maptk:Pushpin GeoCoordinate="{Binding Path=LocationTracker.CurrentLocationSafe, Source={StaticResource ViewModel}}" Style="{StaticResource MyLocationPushpinStyle}" 
                                    PositionOrigin="0.5,0.5"/>
                 </maptk:MapExtensions.Children>
             </m:Map>
