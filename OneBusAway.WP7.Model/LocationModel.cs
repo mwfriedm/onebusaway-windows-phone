@@ -130,7 +130,7 @@ namespace OneBusAway.WP7.Model
                 LocationForQuery location = new LocationForQuery()
                 {
                     name = result.DisplayName,
-                    boundingBox = new LocationRect()
+                    boundingBox = new Microsoft.Phone.Maps.Controls.LocationRectangle()
                     {
                         Northeast = new GeoCoordinate(result.BestView.Northeast.Latitude, result.BestView.Northeast.Longitude),
                         Southwest = new GeoCoordinate(result.BestView.Southwest.Latitude, result.BestView.Southwest.Longitude)

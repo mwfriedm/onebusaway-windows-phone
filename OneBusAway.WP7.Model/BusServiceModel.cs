@@ -401,7 +401,7 @@ namespace OneBusAway.WP7.Model
                                         location.Element(ns + "Confidence").Value,
                                         true
                                         ),
-                                   boundingBox = new LocationRect(
+                                   boundingBox = new Microsoft.Phone.Maps.Controls.LocationRectangle(
                                         Convert.ToDouble(location.Element(ns + "BoundingBox").Element(ns + "NorthLatitude").Value),
                                         Convert.ToDouble(location.Element(ns + "BoundingBox").Element(ns + "WestLongitude").Value),
                                         Convert.ToDouble(location.Element(ns + "BoundingBox").Element(ns + "SouthLatitude").Value),

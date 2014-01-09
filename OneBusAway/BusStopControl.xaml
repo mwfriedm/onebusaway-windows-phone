@@ -18,14 +18,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:m="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
-             mc:Ignorable="d"
+    xmlns:maptk="clr-namespace:Microsoft.Phone.Maps.Toolkit;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="64" d:DesignWidth="44">
 
-    <m:Pushpin x:Name="Pushpin">
+    <maptk:Pushpin x:Name="Pushpin">
         <Canvas x:Name="BusIcon">
             <Canvas.RenderTransform>
                 <TransformGroup>
@@ -44,5 +44,5 @@
 
             <Path Fill="{StaticResource PhoneForegroundBrush}" Stretch="Fill" Stroke="{StaticResource PhoneForegroundBrush}" StrokeLineJoin="Round" Height="12" Width="1" UseLayoutRounding="False" Canvas.Left="13.5" Canvas.Top="6.5" Data="M16,8 L16,17"/>
         </Canvas>
-    </m:Pushpin>
+    </maptk:Pushpin>
 </UserControl>

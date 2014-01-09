@@ -43,7 +43,6 @@
         <view:DateTimeConverter x:Key="DateTimeConverter" />
         <view:VisibilityConverter x:Key="VisibilityConverter" />
         <view:DelayColorConverter x:Key="DelayColorConverter" />
-        <view:PolylineConverter x:Key="PolylineConverter" />
         <view:PushpinScaleConverter x:Key="PushpinScaleConverter" />
         <view:LateEarlyConverter x:Key="LateEarlyConverter" />
         <view:LowercaseConverter x:Key="LowercaseConverter" />

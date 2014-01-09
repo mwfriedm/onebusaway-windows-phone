@@ -24,7 +24,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Device.Location;
 using System.Runtime.Serialization;
-using Microsoft.Phone.Controls.Maps;
+using Microsoft.Phone.Maps.Controls;
 
 namespace OneBusAway.WP7.ViewModel.LocationServiceDataStructures
 {
@@ -46,6 +46,6 @@ namespace OneBusAway.WP7.ViewModel.LocationServiceDataStructures
         [DataMember]
         public Confidence confidence { get; set; }
         [DataMember]
-        public LocationRect boundingBox { get; set; }
+        public LocationRectangle boundingBox { get; set; }
     }
 }

@@ -73,7 +73,7 @@ namespace OneBusAway.WP7.Test
             ROUTE_70.url = "http://metro.kingcounty.gov/tops/bus/schedules/s030_0_.html";
 
             ROUTE_STOPS.name = "Downtown";
-            ROUTE_STOPS.stops = new List<Stop>() { STOP_RAVENNA, STOP_UDIST };
+            ROUTE_STOPS.stops = new System.Collections.ObjectModel.ObservableCollection<Stop>() { STOP_RAVENNA, STOP_UDIST };
 
             FAVORITE = new Dictionary<FavoriteType, FavoriteRouteAndStop>(2);
 
