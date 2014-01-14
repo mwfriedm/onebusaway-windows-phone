@@ -434,7 +434,7 @@ namespace OneBusAway.WP7.View
             viewModel.CurrentViewState.CurrentRoutes = new List<Route>() { (Route)routeStops.route };
 
             viewModel.CurrentViewState.CurrentRoute = routeStops.route;
-            viewModel.CurrentViewState.CurrentRouteDirection = routeStops;
+            viewModel.CurrentViewState.CurrentRouteDirection = new RouteStops(routeStops);
 
             // default to the first stop
             if (viewModel.CurrentViewState.CurrentRouteDirection.stops.Count > 0)
