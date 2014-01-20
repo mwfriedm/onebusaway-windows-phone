@@ -76,7 +76,7 @@ namespace OneBusAway.WP7.View
         private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             WebBrowserTask webBrowserTask = new WebBrowserTask();
-            webBrowserTask.Uri = new Uri("http://onebusawaywp7.codeplex.com");
+            webBrowserTask.Uri = new Uri("https://github.com/OneBusAway/onebusaway-windows-phone");
             webBrowserTask.Show();
         }
     }
