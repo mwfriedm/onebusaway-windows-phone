@@ -252,6 +252,13 @@ namespace OneBusAway.WP7.Model
 
             Uri requestUri = new Uri(requestUrl);
             HttpWebRequest requestGetter = (HttpWebRequest)HttpWebRequest.Create(requestUri);
+            if (invalidateCache)
+            {
+                // the OBA web server is not cache friendly with its responses.
+                // namely, it doesn't set the LastModified header.
+                // the line below forces a refresh of the browser cache.  (the timespan is irrelevant)
+                requestGetter.Headers[HttpRequestHeader.IfModifiedSince] = DateTime.UtcNow.AddDays(-365).ToString();
+            }
             requestGetter.BeginGetResponse(
                 delegate(IAsyncResult asyncResult)
                 {
@@ -380,6 +387,9 @@ namespace OneBusAway.WP7.Model
                 );
 
             HttpWebRequest requestGetter = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
+            // always invalidate the browser cache to get fresh realtime arrivals data.
+            // see also comment in StopsForLocation, which explains the OBA cache policy
+            requestGetter.Headers[HttpRequestHeader.IfModifiedSince] = DateTime.UtcNow.AddDays(-365).ToString();
             requestGetter.BeginGetResponse(delegate(IAsyncResult asyncResult)
                 {
                     XDocument xmlResponse = null;
